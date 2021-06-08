@@ -1,0 +1,23 @@
+server:
+  port: 5001
+
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521/XE
+    username: ORADB2
+    password: oracle123
+    driver:
+      class: oracle.jdbc.driver.OracleDriver
+  jpa:
+    show-sql: true
+    properties:
+      eclipselink.weaving: static
+      eclipselink.ddl-generation: drop-and-create-tables
+      eclipselink.logging.timestamp: false
+      eclipselink.logging.session: false
+      eclipselink.logging.connection: false
+      eclipselink.logging.thread: false
+      eclipselink.logging.level.sql: ALL
+      eclipselink.logging.parameters: true
+      eclipselink.ddl-generation.output-mode: both
