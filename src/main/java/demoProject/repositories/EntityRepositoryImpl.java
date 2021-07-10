@@ -1,5 +1,7 @@
 package demoProject.repositories;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -14,12 +16,13 @@ import java.util.stream.Collectors;
  * 2. Tracks and stores instances created during each transactional method
  * **/
 
+@Transactional
 public abstract class EntityRepositoryImpl<E, ID> implements EntityRepository<E, ID> {
 
     /** Persistence Context is a place where all defined entities are stored.
      *  Entity manager allows us to interact with the persistence context
+     *  Transactional annotation is required in methods where database is changed
      * **/
-
     @PersistenceContext
     EntityManager em;
 
@@ -31,6 +34,8 @@ public abstract class EntityRepositoryImpl<E, ID> implements EntityRepository<E,
      * context keeps track of all changes and is created at start of method and d
      * destroyed at the end. Each entityManager methods call its own transaction
      **/
+
+    Logger logger = LoggerFactory.getLogger(EntityRepositoryImpl.class);
 
     @Transactional
     public E save(E entity) {
@@ -47,20 +52,20 @@ public abstract class EntityRepositoryImpl<E, ID> implements EntityRepository<E,
 
     @Transactional
     public void create(E entity){
-        System.out.println("CREATE CALLED");
+        logger.info("CREATE CALLED");
         em.persist(entity);
     }
 
-    @Transactional
+//    @Transactional
     public List<E> findAll(int start, int max) {
-        System.out.println("FIND ALL CALLED");
+        logger.info("FIND ALL CALLED");
         return em.createNamedQuery(getFindAllQueryName())
                 .setMaxResults(max)
                 .setFirstResult(start * max)
                 .getResultList();
     }
 
-    @Transactional
+//    @Transactional
     public E findById(ID primaryKey) {
         return (E) em.find(getEntityClass(), primaryKey);
     }
