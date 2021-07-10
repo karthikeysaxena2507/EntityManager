@@ -1,16 +1,11 @@
-server:
-  port: 5001
-
-
 spring:
   datasource:
-    url: jdbc:oracle:thin:@localhost:1521/XE
-    username: ${username}
-    password: ${password}
-    driver:
-      class: oracle.jdbc.driver.OracleDriver
+    url: jdbc:h2:mem:TEST;DB_CLOSE_DELAY=-1;
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
   jpa:
-    show-sql: true
+    database: h2
     properties:
       eclipselink.weaving: static
       eclipselink.ddl-generation: drop-and-create-tables
@@ -21,3 +16,4 @@ spring:
       eclipselink.logging.level.sql: ALL
       eclipselink.logging.parameters: true
       eclipselink.ddl-generation.output-mode: database
+  h2.console.enabled: true
