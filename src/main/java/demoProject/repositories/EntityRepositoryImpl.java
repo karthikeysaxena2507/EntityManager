@@ -1,5 +1,6 @@
 package demoProject.repositories;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
  * **/
 
 @Transactional
+@Slf4j
 public abstract class EntityRepositoryImpl<E, ID> implements EntityRepository<E, ID> {
 
     /** Persistence Context is a place where all defined entities are stored.
@@ -35,8 +37,6 @@ public abstract class EntityRepositoryImpl<E, ID> implements EntityRepository<E,
      * destroyed at the end. Each entityManager methods call its own transaction
      **/
 
-    Logger logger = LoggerFactory.getLogger(EntityRepositoryImpl.class);
-
     @Transactional
     public E save(E entity) {
         return em.merge(entity);
@@ -52,13 +52,13 @@ public abstract class EntityRepositoryImpl<E, ID> implements EntityRepository<E,
 
     @Transactional
     public void create(E entity){
-        logger.info("CREATE CALLED");
+        log.info("CREATE CALLED");
         em.persist(entity);
     }
 
 //    @Transactional
     public List<E> findAll(int start, int max) {
-        logger.info("FIND ALL CALLED");
+        log.info("FIND ALL CALLED");
         return em.createNamedQuery(getFindAllQueryName())
                 .setMaxResults(max)
                 .setFirstResult(start * max)
