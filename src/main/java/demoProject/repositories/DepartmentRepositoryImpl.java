@@ -4,7 +4,7 @@ import demoProject.models.Department;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Component("departmentRepositoryImpl")
+@Service
 public class DepartmentRepositoryImpl
         extends EntityRepositoryImpl<Department, Long>
         implements DepartmentRepository

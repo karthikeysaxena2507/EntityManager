@@ -5,8 +5,8 @@ server:
 spring:
   datasource:
     url: jdbc:oracle:thin:@localhost:1521/XE
-    username: ${username}
-    password: ${password}
+    username: ORADB2
+    password: oracle123
     driver:
       class: oracle.jdbc.driver.OracleDriver
   jpa:
